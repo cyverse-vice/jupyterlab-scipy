@@ -41,5 +41,5 @@ Unless you plan on making changes to this container, you should just use the exi
 To test the container locally:
 
 ```
-docker run -it --rm -v /$HOME:/app --workdir /app -p 8888:80 -e REDIRECT_URL=http://localhost:8888 cyversevice/jupyterlab-scipy:latest
+docker run -it --rm -v /$HOME:/app --workdir /app -p 8888:8888 -e REDIRECT_URL=http://localhost:8888 cyversevice/jupyterlab-scipy:latest
 ```
