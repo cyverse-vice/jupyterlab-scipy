@@ -1,0 +1,50 @@
+name: earth-analytics-python
+channels:
+  - conda-forge
+
+dependencies:
+  # Core scientific python
+  - numpy
+  - matplotlib
+  - python=3.7
+  - pyqt
+  - seaborn
+  - tqdm
+  - kiwisolver
+  - pip
+
+  # Spatial packages
+  - rasterstats
+  - geopy
+  - cartopy
+  - geopandas
+  - rasterio
+  - contextily
+  - pysal
+  - pyproj
+  - folium
+  - gdal
+  - libgdal
+  - kealib
+  - geojson
+  - earthpy
+
+  # Natural language processing
+  - nltk
+  - textblob
+
+  # Jupyter Environment
+  - autopep8
+  - notebook
+  - ipython
+  - jupyter_contrib_nbextensions
+  - jupyterlab
+  - nb_conda
+
+  - pip:
+      - nbclean
+      - mapboxgl
+      - hydrofunctions
+      - scikit-learn
+      - geocoder
+      - tweepy
