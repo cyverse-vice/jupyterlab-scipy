@@ -6,7 +6,7 @@ Jupyter Lab base Docker container recipe based on [Jupyter datascience-notebook]
 
 image | tag | size | metrics | build | status |  
 ----- | --- | ---- | ------- | ------|--------|
-[![DockerHub](https://img.shields.io/badge/DockerHub-brightgreen.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy) | latest | [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy/latest.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy/latest) | [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)  |  [![](https://img.shields.io/docker/automated/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/builds) | ![](https://img.shields.io/docker/build/cyversevice/jupyterlab-scipy.svg)
+[![DockerHub](https://img.shields.io/badge/DockerHub-brightgreen.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy) | latest | [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy/latest.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy/latest) | [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)  |  [![](https://img.shields.io/docker/cloud/automated/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/builds) | [![](https://img.shields.io/docker/build/cyversevice/jupyterlab-scipy.svg)](https://cloud.docker.com/u/cyversevice/repository/docker/cyversevice/jupyterlab-scipy)
 
 image | tag | size | metrics | build |
 ----- | ----| ---- | ------- | ------|
