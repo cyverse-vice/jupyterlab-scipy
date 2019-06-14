@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cyversevice/jupyterlab-sipy:latest
+      - image: cyversevice/jupyterlab-scipy:latest
     steps:
       - checkout
       - run: jupyter lab --version
