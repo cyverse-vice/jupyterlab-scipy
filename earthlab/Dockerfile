@@ -1,4 +1,4 @@
-FROM cyversevice/jupyter-scipy:latest
+FROM cyversevice/jupyterlab-scipy:latest
 
 MAINTAINER Tyson Swetnam <tswetnam@cyverse.org>
 
