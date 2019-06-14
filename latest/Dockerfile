@@ -19,7 +19,6 @@ RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - 
     && rm -rf /usr/lib/apt/lists/* \
     && fix-permissions $CONDA_DIR
 
-
 USER jovyan
 
 # install foundational jupyter lab
@@ -28,16 +27,23 @@ RUN conda update -n base conda \
     && conda clean -tipsy \
     && fix-permissions $CONDA_DIR
 
-# install jupyter hub and extra doodads
+# install jupyterlab hub-extension, lab-manager, bokeh, google-drive
 RUN jupyter lab --version \
     && jupyter labextension install @jupyterlab/hub-extension@0.12.0 \
                                     @jupyter-widgets/jupyterlab-manager@0.38.1 \
-                                    jupyterlab_bokeh@0.6.3
+                                    jupyterlab_bokeh@0.6.3 \
+                                    @jupyterlab/google-drive
 
-# Install the irods plugin for jupyter lab
+# install jupyterlab git extension
+RUN jupyter labextension install @jupyterlab/git && \
+    pip install --upgrade jupyterlab-git && \
+    jupyter serverextension enable --py jupyterlab_git
+
+# install the irods plugin for jupyter lab
 RUN pip install jupyterlab_irods==2.0.1 \
     && jupyter serverextension enable --py jupyterlab_irods \
     && jupyter labextension install ijab@2.0.1
+
 
 ENTRYPOINT ["jupyter"]
 CMD ["lab", "--no-browser"]
