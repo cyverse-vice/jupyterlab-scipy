@@ -4,22 +4,22 @@ Jupyter Lab base Docker container recipe based on [Jupyter datascience-notebook]
 [![CircleCI](https://circleci.com/gh/cyverse-vice/jupyterlab-scipy.svg?style=svg)](https://circleci.com/gh/cyverse-vice/jupyterlab-scipy) [![license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://opensource.org/licenses/GPL-3.0) [![Project Supported by CyVerse](https://img.shields.io/badge/Supported%20by-CyVerse-blue.svg)](https://www.cyverse.org) [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246934.svg)](https://doi.org/10.5281/zenodo.3246934)
 
 
-image | tag | size | metrics | build | status |  
------ | --- | ---- | ------- | ------|--------|
-[![DockerHub](https://img.shields.io/badge/DockerHub-brightgreen.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy) | [![](https://images.microbadger.com/badges/version/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy "latest") |  [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy "latest") | [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)  |  [![](https://img.shields.io/docker/cloud/automated/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/builds) | [![](https://img.shields.io/docker/build/cyversevice/jupyterlab-scipy.svg)](https://cloud.docker.com/u/cyversevice/repository/docker/cyversevice/jupyterlab-scipy)
+image | tag | size | metrics | build | 
+----- | --- | ---- | ------- | ------|
+[![DockerHub](https://img.shields.io/badge/DockerHub-brightgreen.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy) | [![](https://images.microbadger.com/badges/version/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy "latest") |  [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy "latest") | [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy.svg?label=pulls&logo=docker&logoColor=white)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)  |  [![](https://img.shields.io/docker/cloud/automated/cyversevice/jupyterlab-scipy.svg?label=build&logo=docker&logoColor=white)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/builds) 
 
 image | tag | size | metrics | build |
 ----- | ----| ---- | ------- | ------|
-[![VICE](https://img.shields.io/badge/CyVerse-VICE-blue.svg?style=popout&logo=Docker&color=#1488C6)]()| [![](https://images.microbadger.com/badges/version/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy "latest") | [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy) | [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy/latest.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)  |  [![](https://img.shields.io/docker/automated/cyversevice/jupyterlab-scipy.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)
+[![VICE](https://img.shields.io/badge/CyVerse-VICE-blue.svg?style=popout&logo=Docker&color=#1488C6)]()| [![](https://images.microbadger.com/badges/version/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy "latest") | [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy) | [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy.svg?label=pulls&logo=docker&logoColor=white)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy)    | [![](https://img.shields.io/docker/cloud/automated/cyversevice/jupyterlab-scipy.svg?label=build&logo=docker&logoColor=white)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/builds) 
 [![VICE](https://img.shields.io/badge/CyVerse-VICE-blue.svg?style=popout&logo=Docker&color=#1488C6)]()|[![](https://images.microbadger.com/badges/version/cyversevice/jupyterlab-scipy:earthlab-latest.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy:earthlab-latest "earthlab-latest") | [![](https://images.microbadger.com/badges/image/cyversevice/jupyterlab-scipy:earthlab-latest.svg)](https://microbadger.com/images/cyversevice/jupyterlab-scipy:earthlab-latest "earthlab-latest")| [![](https://img.shields.io/docker/pulls/cyversevice/jupyterlab-scipy/earthlab-latest.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/earthlab-latest)  |  [![](https://img.shields.io/docker/automated/cyversevice/jupyterlab-scipy/earthlab-latest.svg)](https://hub.docker.com/r/cyversevice/jupyterlab-scipy/earthlab-latest)
 
 # Instructions
 
 ## Run Docker locally or on a Virtual Machine
 
-To run the RStudio container, you must first pull them from DockerHub, or activate a [CyVerse Account](https://user.cyverse.org/services/mine).
+To run the JupyterLab, you must first `pull` from DockerHub, or activate a [CyVerse Account](https://user.cyverse.org/services/mine) and launch in the Discovery Environment VICE.
 
-A Docker container for running RStudio is hosted on DockerHub.
+The container for running JupyterLab is hosted on DockerHub and can be started locally:
 
 ```
 docker pull cyversevice/jupyterlab-scipy:latest
