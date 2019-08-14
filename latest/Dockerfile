@@ -46,9 +46,9 @@ RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab-gitlab
 
 # install the irods plugin for jupyter lab
-RUN pip install jupyterlab_irods==2.0.6 \
+RUN pip install jupyterlab_irods==3.0.0 \
     && jupyter serverextension enable --py jupyterlab_irods \
-    && jupyter labextension install ijab@2.0.6
+    && jupyter labextension install ijab@3.0.0
 
 
 ENTRYPOINT ["jupyter"]
