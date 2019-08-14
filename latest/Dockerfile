@@ -33,7 +33,6 @@ RUN jupyter lab --version \
                                     @jupyter-widgets/jupyterlab-manager \
                                     jupyterlab_bokeh \
                                     @jupyterlab/google-drive
-COPY drive.jupyterlab-settings /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/google-drive/drive.jupyterlab-settings
 
 # install jupyterlab git extension
 RUN jupyter labextension install @jupyterlab/git && \
