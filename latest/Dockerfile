@@ -36,8 +36,14 @@ RUN jupyter lab --version \
 
 # install jupyterlab git extension
 RUN jupyter labextension install @jupyterlab/git && \
-    pip install --upgrade jupyterlab-git && \
-    jupyter serverextension enable --py jupyterlab_git
+        pip install --upgrade jupyterlab-git && \
+        jupyter serverextension enable --py jupyterlab_git
+
+# install jupyterlab github extension
+RUN jupyter labextension install @jupyterlab/github
+
+# install jupyterlab gitlab extension
+RUN jupyter labextension install jupyterlab-gitlab
 
 # install the irods plugin for jupyter lab
 RUN pip install jupyterlab_irods==2.0.6 \
