@@ -1,8 +1,27 @@
-version: 2
 jobs:
-  build:
+  build1:
     docker:
       - image: cyversevice/jupyterlab-scipy:latest
     steps:
       - checkout
       - run: jupyter lab --version
+  build2:
+    docker:
+      - image: cyversevice/jupyterlab-scipy:gee-latest
+    steps:
+      - checkout
+      - run: jupyter lab --version
+  build3:
+    docker:
+      - image: cyversevice/jupyterlab-scipy:earthlab-latest
+    steps:
+      - checkout
+      - run: jupyter lab --version    
+workflows:
+  version: 2
+  build1_to_build3:
+    jobs:
+      - build1
+      - build2
+      - build3
+      
