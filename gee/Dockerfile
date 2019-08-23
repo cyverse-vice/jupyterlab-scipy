@@ -7,9 +7,9 @@ RUN conda install -y -c conda-forge earthengine-api pandas folium nodejs cython 
 RUN pip install --upgrade pip && \
     pip install altair && \
     pip install bqplot && \
-    pip install earthengine-api && \
+    # pip install earthengine-api && \
     pip install fiona && \
-    #pip install folium && \ 
+    # pip install folium && \ 
     pip install google-api-python-client && \
     pip install humanize && \
     pip install ipyleaflet && \
