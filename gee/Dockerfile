@@ -28,14 +28,18 @@ RUN pip install --upgrade pip && \
 
 RUN jupyter labextension install @jupyterlab/geojson-extension && \
     jupyter labextension install jupyter-leaflet && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager
+    
+RUN jupyter nbextension install --py --symlink --sys-prefix ipyleaflet && \
+    jupyter nbextension enable --py --sys-prefix ipyleaflet
+
+RUN jupyter labextension install js && \
+    jupyter labextension install ipyvolume
+
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-    jupyter nbextension install --py --symlink --sys-prefix ipyleaflet && \
-    jupyter nbextension enable --py --sys-prefix ipyleaflet && \
-    jupyter labextension install js && \
-    jupyter labextension install ipyvolume && \
-    jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-    jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    jupyter labextension install bqplot && \
+    jupyter nbextension enable --py widgetsnbextension --sys-prefix
+
+RUN jupyter labextension install bqplot && \
     jupyter nbextension install bqplot --py --symlink --sys-prefix && \ 
     jupyter nbextension enable --py --sys-prefix bqplot
