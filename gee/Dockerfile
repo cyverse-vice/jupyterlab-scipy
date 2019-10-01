@@ -31,10 +31,10 @@ RUN jupyter labextension install @jupyterlab/geojson-extension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager
     
 RUN jupyter nbextension install --py --symlink --sys-prefix ipyleaflet && \
-    jupyter nbextension enable --py --sys-prefix ipyleaflet
-
-RUN jupyter labextension install js && \
+    jupyter nbextension enable --py --sys-prefix ipyleaflet && \
     jupyter labextension install ipyvolume
+
+# RUN jupyter labextension install js && \
 
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
