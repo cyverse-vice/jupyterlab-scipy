@@ -6,7 +6,7 @@ USER root
 
 # Install the icommands, curl, and wget
 RUN apt-get update \
-    && apt-get install -y lsb wget gnupg apt-transport-https python3.6 python-requests curl \
+    && apt-get install -y less vim htop libpq-dev lsb wget gnupg apt-transport-https python3.6 python-requests curl \
     && apt-get clean \
     && rm -rf /usr/lib/apt/lists/* \
     && fix-permissions $CONDA_DIR
@@ -19,20 +19,16 @@ RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - 
     && rm -rf /usr/lib/apt/lists/* \
     && fix-permissions $CONDA_DIR
 
-USER jovyan
-
-# install foundational jupyter lab
-RUN conda update -n base conda \
-    && conda install jupyterlab \
-    && conda clean -tipsy \
-    && fix-permissions $CONDA_DIR
-
-# install jupyterlab hub-extension, lab-manager, bokeh, google-drive
-RUN jupyter lab --version \
-    && jupyter labextension install @jupyterlab/hub-extension \
-                                    @jupyter-widgets/jupyterlab-manager \
-                                    jupyterlab_bokeh \
-                                    @jupyterlab/google-drive
+RUN pip install ipython-sql jupyterlab==1.0.9 jupyterlab_sql psycopg2 \
+    && conda update -n base conda \
+    && conda install -c conda-forge nodejs \
+    && jupyter serverextension enable jupyterlab_sql --py --sys-prefix \
+    && jupyter lab build
+    
+# install the irods plugin for jupyter lab
+RUN pip install jupyterlab_irods \
+    && jupyter serverextension enable --py jupyterlab_irods \
+    && jupyter labextension install ijab
 
 # install jupyterlab git extension
 RUN jupyter labextension install @jupyterlab/git && \
@@ -45,11 +41,18 @@ RUN jupyter labextension install @jupyterlab/github
 # install jupyterlab gitlab extension
 RUN jupyter labextension install jupyterlab-gitlab
 
-# install the irods plugin for jupyter lab
-RUN pip install jupyterlab_irods==3.0.1 \
-    && jupyter serverextension enable --py jupyterlab_irods \
-    && jupyter labextension install ijab@3.0.1
+# install jupyterlab hub-extension, lab-manager, bokeh, google-drive
+RUN jupyter lab --version \
+    && jupyter labextension install @jupyterlab/hub-extension \
+                                    @jupyter-widgets/jupyterlab-manager \
+                                    jupyterlab_bokeh \
+                                    @jupyterlab/google-drive
+
+USER jovyan
+
+COPY entry.sh /bin
+RUN mkdir -p /home/jovyan/.irods
+
+ENTRYPOINT ["bash", "/bin/entry.sh"]
 
 
-ENTRYPOINT ["jupyter"]
-CMD ["lab", "--no-browser"]
