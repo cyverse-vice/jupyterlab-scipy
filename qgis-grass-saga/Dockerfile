@@ -63,8 +63,11 @@ RUN apt-get update \
         xfce4-terminal \
         zlib1g-dev \
     && apt-get autoremove -y \
-    && apt-get clean \
-    && mkdir -p $DATA_DIR
+    && apt-get clean 
+
+ENV DATA_DIR /data
+
+RUN mkdir -p $DATA_DIR
 
 RUN echo LANG="en_US.UTF-8" > /etc/default/locale
 ENV LANG C.UTF-8
@@ -109,7 +112,9 @@ RUN cd /code/grass && ./configure \
     --with-opengl-libs=/usr/include/GL \
     --with-openmp \
     --enable-64bit \
-    && make -j $NUMTHREADS && make install && ldconfig
+    && make -j 4 && make install 
+
+RUN ldconfig
    
 # enable simple grass command regardless of version number
 RUN ln -s /usr/local/bin/grass* /usr/local/bin/grass

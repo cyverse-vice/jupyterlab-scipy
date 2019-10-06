@@ -1,5 +1,7 @@
 FROM cyversevice/jupyterlab-scipy:latest
 
+USER root
+
 RUN conda update -n base conda 
 
 RUN conda install -y -c conda-forge earthengine-api pandas folium nodejs cython gdal
@@ -34,8 +36,6 @@ RUN jupyter nbextension install --py --symlink --sys-prefix ipyleaflet && \
     jupyter nbextension enable --py --sys-prefix ipyleaflet && \
     jupyter labextension install ipyvolume
 
-# RUN jupyter labextension install js && \
-
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     jupyter nbextension enable --py widgetsnbextension --sys-prefix
@@ -43,3 +43,9 @@ RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
 RUN jupyter labextension install bqplot && \
     jupyter nbextension install bqplot --py --symlink --sys-prefix && \ 
     jupyter nbextension enable --py --sys-prefix bqplot
+
+# Install R Kernel
+
+RUN conda install -c r r-irkernel
+
+USER jovyan
