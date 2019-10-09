@@ -44,11 +44,13 @@ RUN jupyter labextension install bqplot && \
     jupyter nbextension enable --py --sys-prefix bqplot
 
 # Install R Kernel w/ spatial depends
-RUN conda install -c r r-dplyr r-dt r-geosphere r-irkernel r-jsonlite \
-       r-leaflet r-leaflet.extras r-lubridate r-shiny r-shinythemes \
-       r-shinyWidgets r-shinyBS r-shinyjs r-sf r-stringi r-rstudioapi
+RUN conda install -c r r-base r-caret r-devtools r-dplyr r-dt r-forecast r-geosphere r-hexbin r-htmltools r-htmlwidgets r-irkernel r-jsonlite \
+       r-leaflet r-leaflet.extras r-lubridate r-plyr r-rcurl r-reshape2 r-rmarkdown r-rodbc r-rsqlite r-shiny r-shinythemes \
+       r-shinyWidgets r-shinyBS r-shinyjs r-sf r-sparklyr r-stringi r-rstudioapi r-tidyverse
+
 RUN conda install -c conda-forge r-crul r-rgdal r-proj4
 
+# more R stuff
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
 		libapparmor1 \
@@ -57,7 +59,15 @@ RUN apt-get update && \
 		psmisc \
 		libssl1.0.0 
 
-# wierd error fix for neonUtilities
+RUN apt-get install -y --no-install-recommends \
+                fonts-dejavu \
+                unixodbc \
+                unixodbc-dev \
+                r-cran-rodbc \
+                gfortran \
+                gcc
+
+# Wierd error fix for neonUtilities
 # Download the source code
 RUN wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/icu_4.8.1.1.orig.tar.gz &&\
 	tar xzf icu_4.8.1.1.orig.tar.gz && \
@@ -67,31 +77,37 @@ RUN wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/icu_4.8.1.1.orig.tar.g
 	make && \
 	make install && \
 	rm -rf icu/
-		
-# You can use rsession from rstudio's desktop package as well.
-ENV RSTUDIO_PKG=rstudio-server-1.0.136-amd64.deb
 
-RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
-RUN dpkg -i ${RSTUDIO_PKG}
-RUN rm ${RSTUDIO_PKG}
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
+RUN Rscript -e "install.packages('neonUtilities', dependencies=TRUE)"
+		
+# Use rsession from rstudio's desktop package
+#RUN apt-get install -y libclang-dev
+#ENV RSTUDIO_PKG=rstudio-server-1.2.5001-amd64.deb
+#RUN wget -q https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5001-amd64.deb
+#RUN dpkg -i ${RSTUDIO_PKG}
+#RUN rm ${RSTUDIO_PKG}
+
+# The desktop package uses /usr/lib/rstudio/bin
+#ENV PATH="${PATH}:/usr/lib/rstudio-server/bin"
+#ENV LD_LIBRARY_PATH="/usr/lib/R/lib:/lib:/usr/lib/x86_64-linux-gnu:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/o$
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install the VS code proxy
+# Install the proxy
 ADD setup.py setup.py
-ADD jupyter_rsession_proxy jupyter_rsession_proxy
-
+ADD jupyter_rsession_proxy/ jupyter_rsession_proxy/
 RUN pip install .
 
-# Install NEON Utilities
+# Last update and re-build
+RUN conda update --all
+RUN conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR
+RUN jupyter lab build
 
-#RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
-#RUN Rscript -e "install.packages('neonUtilities', dependencies=TRUE)"
 
 USER jovyan
 
-# The desktop package uses /usr/lib/rstudio/bin
-ENV PATH="${PATH}:/usr/lib/rstudio-server/bin"
-ENV LD_LIBRARY_PATH="/usr/lib/R/lib:/lib:/usr/lib/x86_64-linux-gnu:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/opt/conda/lib/R/lib"
+# Entrypoint is set in previous cyversevice/jupyterlab-scipy:latest container
 
