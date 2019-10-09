@@ -63,9 +63,7 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Last update and re-build
-RUN conda update --all
-RUN conda clean --all -f -y && \
-    fix-permissions $CONDA_DIR
+
 RUN jupyter lab build
 
 
