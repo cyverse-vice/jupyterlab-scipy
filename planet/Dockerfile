@@ -22,7 +22,7 @@ RUN pip install --upgrade pip && \
     pip install oauth2client && \
     pip install palettable && \
     pip install pathlib && \
-    pip install planet && \
+    pip install planet==1.3.2 && \
     pip install pyCrypto && \
     pip install rasterio && \
     pip install vega_datasets
