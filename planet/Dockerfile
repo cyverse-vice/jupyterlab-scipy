@@ -66,6 +66,7 @@ RUN apt-get clean && \
 
 RUN jupyter lab build
 
+RUN apt-get install -y xvfb
 
 USER jovyan
 
