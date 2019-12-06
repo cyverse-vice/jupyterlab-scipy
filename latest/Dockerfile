@@ -20,7 +20,7 @@ RUN pip install ipython-sql jupyterlab==1.0.9 jupyterlab_sql psycopg2 \
     && jupyter lab build
 
 # install the irods plugin for jupyter lab
-RUN pip install jupyterlab_irods \
+RUN pip install jupyterlab_irods==3.0.2 \
     && jupyter serverextension enable --py jupyterlab_irods \
     && jupyter labextension install ijab
 
