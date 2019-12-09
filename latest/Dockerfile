@@ -41,10 +41,8 @@ RUN jupyter labextension install @jupyterlab/github
 # Install and configure jupyter lab.
 COPY jupyter_notebook_config.json /opt/conda/etc/jupyter/jupyter_notebook_config.json
 
-# Add the qiime2 user so the container doesn't run as root
+# Add the jovyan user to UID 1000
 RUN usermod -d /home/jovyan -u 1000 jovyan
-
-# RUN adduser qiime2 sudo
 USER jovyan
 WORKDIR /home/jovyan
 
