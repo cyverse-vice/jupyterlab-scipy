@@ -1,12 +1,11 @@
 FROM cyversevice/jupyterlab-scipy:latest
 
+# reset user to root to install depenencies
 USER root
 
-RUN conda update -n base conda 
-
 # Install Geospatial dependencies and Google Earth Engine API
-RUN conda install -y -c conda-forge earthengine-api pandas folium nodejs cython gdal proj4 udunits2 pdal entwine 
-
+RUN conda update -n base conda && conda install -y -c conda-forge earthengine-api pandas folium nodejs cython gdal proj4 udunits2 pdal entwine 
+# install a bunch of dependencies with pip
 RUN pip install --upgrade pip && \
     pip install altair && \
     pip install bqplot && \
@@ -27,45 +26,82 @@ RUN pip install --upgrade pip && \
     pip install rasterio && \
     pip install vega_datasets
 
+# add GEOJSON widget
 RUN jupyter labextension install @jupyterlab/geojson-extension && \
     jupyter labextension install jupyter-leaflet && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager
     
+# add IPyleaflet 
 RUN jupyter nbextension install --py --symlink --sys-prefix ipyleaflet && \
     jupyter nbextension enable --py --sys-prefix ipyleaflet && \
     jupyter labextension install ipyvolume
 
+# add widgets extension manager
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
+# add bqplot extension
 RUN jupyter labextension install bqplot && \
     jupyter nbextension install bqplot --py --symlink --sys-prefix && \ 
     jupyter nbextension enable --py --sys-prefix bqplot
 
-# Install R Kernel w/ spatial depends
-RUN conda install -c r r-base r-caret r-devtools r-dplyr r-dt r-forecast r-geosphere r-hexbin r-htmltools r-htmlwidgets r-irkernel r-jsonlite \
-       r-leaflet r-leaflet.extras r-lubridate r-plyr r-rcurl r-reshape2 r-rmarkdown r-rodbc r-rsqlite r-shiny r-shinythemes \
-       r-shinyWidgets r-shinyBS r-shinyjs r-sf r-sparklyr r-stringi r-rstudioapi r-tidyverse
+# EXPERIMENTAL Jupyter R Proxy Service with R-Studio & Shiny outside of Jupyter Lab
 
-RUN conda install -c conda-forge r-crul r-rgdal r-proj4
+RUN jupyter labextension install jupyterlab-server-proxy
+# Install R Kernel w/ spatial depends
+RUN conda install -c r \
+	r-base \
+	r-caret \
+	r-devtools \
+	r-dplyr \
+	r-dt \
+	r-forecast \
+	r-geosphere \
+	r-hexbin \
+	r-htmltools \
+	r-htmlwidgets \
+	r-irkernel \
+	r-jsonlite \
+        r-leaflet \ 
+        r-leaflet.extras \
+        r-lubridate \
+        r-plyr \ 
+        r-rcurl \
+        r-reshape2 \
+        r-rmarkdown \
+        r-rodbc \
+        r-rsqlite \
+        r-shiny \
+        r-shinythemes \
+        r-shinyWidgets \
+        r-shinyBS \
+        r-shinyjs \
+        r-sf \
+        r-sparklyr \
+        r-stringi \
+        r-rstudioapi \
+        r-tidyverse \
+    && conda install -c conda-forge \
+        r-crul \
+        r-rgdal \
+        r-proj4
 
 # more R stuff
-RUN apt-get update && \
-	apt-get install -y --no-install-recommends \
-		libapparmor1 \
-		libedit2 \
-		lsb-release \
-		psmisc \
-		libssl1.0.0 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	libapparmor1 \
+	libedit2 \
+	lsb-release \
+	psmisc \
+	libssl1.0.0 
 
 RUN apt-get install -y --no-install-recommends \
-                fonts-dejavu \
-                unixodbc \
-                unixodbc-dev \
-                r-cran-rodbc \
-                gfortran \
-                gcc
+    	fonts-dejavu \
+        unixodbc \
+        unixodbc-dev \
+        r-cran-rodbc \
+        gfortran \
+        gcc
 
 # Wierd error fix for neonUtilities
 # Download the source code
@@ -106,6 +142,7 @@ RUN conda clean --all -f -y && \
     fix-permissions $CONDA_DIR
 RUN jupyter lab build
 
+# Change user back to jovyan
 
 USER jovyan
 
