@@ -48,7 +48,8 @@ RUN jupyter labextension install bqplot && \
 
 # EXPERIMENTAL Jupyter R Proxy Service with R-Studio & Shiny outside of Jupyter Lab
 
-RUN jupyter labextension install jupyterlab-server-proxy
+# RUN jupyter labextension install jupyterlab-server-proxy
+
 # Install R Kernel w/ spatial depends
 RUN conda install -c r \
 	r-base \
@@ -93,10 +94,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libedit2 \
 	lsb-release \
 	psmisc \
-	libssl1.0.0 
-
-RUN apt-get install -y --no-install-recommends \
-    	fonts-dejavu \
+	libssl1.0.0 \
+        fonts-dejavu \
         unixodbc \
         unixodbc-dev \
         r-cran-rodbc \
@@ -137,9 +136,7 @@ ADD jupyter_rsession_proxy/ jupyter_rsession_proxy/
 RUN pip install .
 
 # Last update and re-build
-RUN conda update --all
-RUN conda clean --all -f -y && \
-    fix-permissions $CONDA_DIR
+RUN conda clean --all -f -y
 RUN jupyter lab build
 
 # Change user back to jovyan

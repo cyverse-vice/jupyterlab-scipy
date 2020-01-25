@@ -13,16 +13,16 @@ RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icomma
     rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
 
 # Install Jupyter lab
-RUN pip install ipython-sql jupyterlab jupyterlab_sql psycopg2 \
+RUN pip install ipython-sql jupyterlab==1.0.9 jupyterlab_sql psycopg2 \
     && conda update -n base conda \
     && conda install -c conda-forge nodejs \
     && jupyter serverextension enable jupyterlab_sql --py --sys-prefix \
     && jupyter lab build
 
 # install the irods plugin for jupyter lab
-#RUN pip install jupyterlab_irods==3.0.2 \
-#    && jupyter serverextension enable --py jupyterlab_irods \
-#    && jupyter labextension install ijab
+RUN pip install jupyterlab_irods==3.0.2 \
+    && jupyter serverextension enable --py jupyterlab_irods \
+    && jupyter labextension install ijab
 
 # install jupyterlab hub-extension, lab-manager, bokeh
 RUN jupyter lab --version \

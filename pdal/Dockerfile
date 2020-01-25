@@ -1,12 +1,13 @@
 FROM cyversevice/jupyterlab-scipy:latest
 
+# reset user to root to install depenencies
 USER root
 
-RUN conda update -n base conda 
-
 # Install Geospatial dependencies and Google Earth Engine API
-RUN conda install -y -c conda-forge earthengine-api pandas folium nodejs cython gdal proj4 udunits2 pdal entwine 
+RUN conda update -n base conda && \
+    conda create -n entwine -y -c conda-forge earthengine-api pandas folium nodejs cython gdal proj4 udunits2 pdal entwine 
 
+# install a bunch of dependencies with pip
 RUN pip install --upgrade pip && \
     pip install altair && \
     pip install bqplot && \
@@ -22,53 +23,44 @@ RUN pip install --upgrade pip && \
     pip install oauth2client && \
     pip install palettable && \
     pip install pathlib && \
-    pip install planet==1.3.2 && \
+    pip install planet && \
     pip install pyCrypto && \
     pip install rasterio && \
     pip install vega_datasets
 
+# add GEOJSON widget
 RUN jupyter labextension install @jupyterlab/geojson-extension && \
     jupyter labextension install jupyter-leaflet && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager
     
+# add IPyleaflet 
 RUN jupyter nbextension install --py --symlink --sys-prefix ipyleaflet && \
     jupyter nbextension enable --py --sys-prefix ipyleaflet && \
     jupyter labextension install ipyvolume
 
+# add widgets extension manager
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
+# add bqplot extension
 RUN jupyter labextension install bqplot && \
     jupyter nbextension install bqplot --py --symlink --sys-prefix && \ 
     jupyter nbextension enable --py --sys-prefix bqplot
 
-# Planet Labs stuff
-RUN conda install -c conda-forge cartopy
-RUN conda install -y -c conda-forge gdal
-
-COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt 
-
-RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    jupyter nbextension enable --py --sys-prefix ipyleaflet
-
-RUN mkdir -p /etc/pki/tls/certs
-RUN cp /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
-
-RUN conda install -y -c conda-forge ncurses
-
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Last update and re-build
+# Last clean things up a bit
+RUN conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR
 
 RUN jupyter lab build
 
-RUN apt-get update && apt-get install -y xvfb
-
 USER jovyan
+
+CMD source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate entwine
 
 # Entrypoint is set in previous cyversevice/jupyterlab-scipy:latest container
 
