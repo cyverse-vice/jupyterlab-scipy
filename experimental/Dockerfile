@@ -42,8 +42,13 @@ RUN pip install jupyter-server-proxy && jupyter labextension install jupyterlab-
 
 # Compile Thiea
 
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash && \
-    nvm install 10 && npm install -g yarn
+RUN mkdir /opt/theia
+
+COPY package.json /opt/theia/package.json
+
+RUN cd /opt/theia && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash && \
+    nvm install 10 && npm install -g yarn && yarn && yarn theia build && \
+    bash -e 'export PATH="$(pwd)/node_modules/.bin:${PATH}"'
 
 # Install and configure jupyter lab.
 COPY jupyter_notebook_config.json /opt/conda/etc/jupyter/jupyter_notebook_config.json
