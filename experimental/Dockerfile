@@ -3,8 +3,24 @@ FROM jupyter/scipy-notebook:latest
 USER root
 
 # dependencies for icommands, curl, and wget
-RUN apt-get update && apt-get install -y software-properties-common nodejs less vim nano htop libpq-dev lsb wget gnupg apt-transport-https python3 python-requests curl gcc 
-RUN apt-get install -y libfuse2 libssl1.0
+RUN apt-get update && apt-get install -y 
+    apt-transport-https \
+    curl \
+    htop \
+    gcc \     
+    gnupg \
+    vim \
+    nano \
+    nodejs \
+    less \
+    libfuse2 \
+    libpq-dev \
+    libssl1.0 \
+    lsb \
+    python3 \
+    python-requests \
+    software-properties-common \
+    wget 
 
 # iCommands
 RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
