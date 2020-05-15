@@ -10,6 +10,7 @@ RUN pip install --upgrade pip && \
     pip install altair && \
     pip install bqplot && \
     pip install fiona && \
+    pip install geemap && \
     pip install google-api-python-client && \
     pip install humanize && \
     pip install ipyleaflet && \
