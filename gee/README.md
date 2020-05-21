@@ -24,24 +24,24 @@ The container for running JupyterLab is hosted on DockerHub and can be started l
 
 
 ```
-docker pull cyversevice/jupyterlab-scipy:latest
+docker pull cyversevice/jupyterlab-gee:latest
 ```
 
 ```
-docker run -it --rm -d cyversevice/jupyterlab-scipy:latest
+docker run -it --rm -d cyversevice/jupyterlab-gee:latest
 ```
 
 ## Run Docker container in CyVerse VICE
 
 Unless you plan on making changes to this container, you should just use the existing launch button above.
 
-You can build a new Docker container with additional dependencies from this Docker Hub image by using the `FROM cyversevice/jupyterlab-scipy:latest` at the beginning of your own Dockerfile.
+You can build a new Docker container with additional dependencies from this Docker Hub image by using the `FROM cyversevice/jupyterlab-gee:latest` at the beginning of your own Dockerfile.
 
 ###### Developer notes
 
 To test the container locally:
 
 ```
-docker run -it --rm -v /$HOME:/app --workdir /app -p 8888:8888 -e REDIRECT_URL=http://localhost:8888 cyversevice/jupyterlab-scipy:latest
+docker run -it --rm -v /$HOME:/app --workdir /app -p 8888:8888 -e REDIRECT_URL=http://localhost:8888 cyversevice/jupyterlab-gee:latest
 ```
 
