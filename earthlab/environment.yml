@@ -1,6 +1,7 @@
 name: earth-analytics-python
 channels:
   - conda-forge
+  - defaults
 
 dependencies:
   # Core scientific python
@@ -14,20 +15,25 @@ dependencies:
   - pip
 
   # Spatial packages
-  - rasterstats
-  - geopy
   - cartopy
-  - geopandas
-  - rasterio
   - contextily
-  - pysal
-  - pyproj
+  - earthpy
   - folium
   - gdal
-  - libgdal
-  - kealib
+  - geocoder
   - geojson
-  - earthpy
+  - geopandas
+  - geopy
+  - hydrofunctions
+  - kealib
+  - libgdal
+  - rasterio
+  - rasterstats
+  - pyproj
+  - pysal
+  - tweepy
+  - xarray
+  - scipy
 
   # Natural language processing
   - nltk
