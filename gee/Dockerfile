@@ -66,7 +66,7 @@ USER root
 RUN echo -e "deb https://s3.amazonaws.com/repo.deb.cyberduck.io stable main" | tee /etc/apt/sources.list.d/cyberduck.list > /dev/null && \
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FE7097963FEFBE72 && \
 apt-get update && \
-apt-get install duck=6.7.1.28683
+apt-get install duck
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
