@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y \
     vim
     
 # Install iCommands
-RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
-    dpkg -i irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
-    rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
+RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - \
+    && echo "deb [arch=amd64] https://packages.irods.org/apt/ bionic main" | tee /etc/apt/sources.list.d/renci-irods.list \
+    && apt-get update && apt-get install -y irods-runtime irods-icommands
 
 # Install Jupyter SQL
 RUN pip install ipython-sql jupyterlab_sql psycopg2 \
