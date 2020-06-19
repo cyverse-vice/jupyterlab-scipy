@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook:82d1d0bf0867
 
 USER root
 
@@ -27,8 +27,7 @@ RUN pip install jupyterlab_irods==3.0.2 \
 # install jupyterlab hub-extension, lab-manager, bokeh
 RUN jupyter lab --version \
     && jupyter labextension install @jupyterlab/hub-extension \
-                                    @jupyter-widgets/jupyterlab-manager \
-                                    jupyterlab_bokeh 
+                                    @jupyter-widgets/jupyterlab-manager
 
 # install jupyterlab git extension
 RUN jupyter labextension install @jupyterlab/git && \
