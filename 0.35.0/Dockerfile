@@ -1,70 +1,54 @@
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook:5b2160dfd919
 
 USER root
 
-# dependencies for icommands, curl, and wget
+# Install a few dependencies for iCommands, text editing, and monitoring instances
 RUN apt-get update && apt-get install -y \
     apt-transport-https \
-    curl \
-    htop \
-    gcc \     
+    gcc \
     gnupg \
-    vim \
-    nano \
-    nodejs \
+    htop \
     less \
     libfuse2 \
     libpq-dev \
     libssl1.0 \
     lsb \
-    python3 \
+    nano \
+    nodejs \
     python-requests \
     software-properties-common \
-    wget 
+    vim
+    
+# Install iCommands
+RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - \
+    && echo "deb [arch=amd64] https://packages.irods.org/apt/ bionic main" | tee /etc/apt/sources.list.d/renci-irods.list \
+    && apt-get update && apt-get install -y irods-runtime irods-icommands
 
-# iCommands
-RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
-    dpkg -i irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
-    rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
-
-# JupyterLab
-RUN pip install ipython-sql jupyterlab jupyterlab_sql psycopg2 \
+# Install Jupyter SQL
+RUN pip install ipython-sql jupyterlab_sql psycopg2 \
     && conda update -n base conda \
     && conda install -c conda-forge nodejs \
     && jupyter serverextension enable jupyterlab_sql --py --sys-prefix \
     && jupyter lab build
 
-# CyVerse iRODS plugin
-#RUN pip install jupyterlab_irods==3.0.2 \
-#    && jupyter serverextension enable --py jupyterlab_irods \
-#    && jupyter labextension install ijab
+# install the irods plugin for jupyter lab -- non-functional beyond JupyterLab v1.0.9
+RUN pip install jupyterlab_irods==3.0.2 \
+   && jupyter serverextension enable --py jupyterlab_irods \
+   && jupyter labextension install ijab
 
-# jupyterlab hub-extension, lab-manager, bokeh
+# install jupyterlab hub-extension, lab-manager, bokeh
 RUN jupyter lab --version \
     && jupyter labextension install @jupyterlab/hub-extension \
                                     @jupyter-widgets/jupyterlab-manager \
                                     jupyterlab_bokeh 
 
-# jupyterlab git widget
+# install jupyterlab git extension
 RUN jupyter labextension install @jupyterlab/git && \
         pip install --upgrade jupyterlab-git && \
         jupyter serverextension enable --py jupyterlab_git
 
-# jupyterlab github widget
+# install jupyterlab github extension
 RUN jupyter labextension install @jupyterlab/github
-
-# Proxy Server for JupyterLab
-RUN pip install jupyter-server-proxy && jupyter labextension install jupyterlab-server-proxy
-
-# Compile Thiea
-
-RUN mkdir /opt/theia
-
-COPY package.json /opt/theia/package.json
-
-RUN cd /opt/theia && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash && \
-    nvm install 10 && npm install -g yarn && yarn && yarn theia build && \
-    bash -e 'export PATH="$(pwd)/node_modules/.bin:${PATH}"'
 
 # Install and configure jupyter lab.
 COPY jupyter_notebook_config.json /opt/conda/etc/jupyter/jupyter_notebook_config.json
