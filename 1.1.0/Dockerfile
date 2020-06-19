@@ -39,7 +39,7 @@ RUN pip install ipython-sql jupyterlab_sql psycopg2 \
 # install jupyterlab hub-extension, lab-manager, bokeh
 RUN jupyter lab --version \
     && jupyter labextension install @jupyterlab/hub-extension \
-                                    @jupyter-widgets/jupyterlab-manager \
+                                    @jupyter-widgets/jupyterlab-manager
                                     #jupyterlab_bokeh 
 
 # install jupyterlab git extension
