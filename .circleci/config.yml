@@ -7,7 +7,7 @@ jobs:
       - run: jupyter lab --version
   build2:
     docker:
-      - image: cyversevice/jupyterlab-scipy:0.35.0
+      - image: cyversevice/jupyterlab-scipy:2.2.9
     steps:
       - checkout
       - run: jupyter lab --version    
@@ -16,37 +16,7 @@ jobs:
       - image: cyversevice/jupyterlab-scipy:1.0.9
     steps:
       - checkout
-      - run: jupyter lab --version    
-  build4:
-    docker:
-      - image: cyversevice/jupyterlab-scipy:1.1.0
-    steps:
-      - checkout
-      - run: jupyter lab --version    
-  build5:
-    docker:
-      - image: cyversevice/jupyterlab-scipy:1.2.0
-    steps:
-      - checkout
-      - run: jupyter lab --version    
-  build6:
-    docker:
-      - image: cyversevice/jupyterlab-scipy:2.0.1
-    steps:
-      - checkout
-      - run: jupyter lab --version    
-  build7:
-    docker:
-      - image: cyversevice/jupyterlab-scipy:2.0.2
-    steps:
-      - checkout
-      - run: jupyter lab --version    
-  build8:
-    docker:
-      - image: cyversevice/jupyterlab-scipy:2.1.0
-    steps:
-      - checkout
-      - run: jupyter lab --version    
+      - run: jupyter lab --version      
 workflows:
   version: 2
   build1_to_build8:
@@ -54,8 +24,3 @@ workflows:
       - build1
       - build2
       - build3
-      - build4
-      - build5
-      - build6
-      - build7
-      - build8
